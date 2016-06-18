@@ -2,24 +2,27 @@
 // @name        Change Page Titles Properly
 // @namespace   nexon.net
 // @description Changes the page title for tab clarity
-// @include     /https?:\/\/[^\.]+\.nexon\.net\/community\/?(#.*)?/
+// @include     /https?:\/\/[^\.]+\.nexon\.net\/community(\/(forums)?)?(#.*)?/
 // @run-at      document-idle
 // @version     1
 // @grant       none
 // ==/UserScript==
 
+var siteName = getMetaContentByName("og:site_name");
+
 function setTitle() {
 	var hash = window.location.hash,
-		siteName = getMetaContentByName("og:site_name").replace(" - ", " Forum - ");
-		title = hash.match(/.*?-([^%]+)%/);
-	if(title == null) title = "";
-	else title = title[1].replace(/-/g, " ") + " - ";
+		title = hash.match(/.*?-([^%]+)(%|$)/);
+	//if(title == null) title = "";
+	//else title = title[1].replace(/-/g, " ") + " - ";
+	title = (title == null) ? "" : title[1].replace(/-/g, " ") + " - "; 
 	document.title = title + siteName;
 }
 
 function getMetaContentByName(name, content) {
    content = (content == null) ? 'content' : content;
-   return document.querySelector("meta[property='" + name + "']").getAttribute(content);
+   var element = document.querySelector("meta[property='" + name + "']");
+   return (element == null) ? document.title : element.getAttribute(content).replace(" - ", " Forum - ");
 }
 
 setTitle();
