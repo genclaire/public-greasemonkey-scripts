@@ -8,22 +8,20 @@
 // @grant       none
 // ==/UserScript==
 
-var siteName = getMetaContentByName("og:site_name");
-
 function setTitle() {
 	var hash = window.location.hash,
 		title = hash.match(/.*?-([^%]+)(%|$)/);
-	//if(title == null) title = "";
-	//else title = title[1].replace(/-/g, " ") + " - ";
 	title = (title == null) ? "" : title[1].replace(/-/g, " ") + " - "; 
 	document.title = title + siteName;
 }
 
 function getMetaContentByName(name, content) {
-   content = (content == null) ? 'content' : content;
-   var element = document.querySelector("meta[property='" + name + "']");
-   return (element == null) ? document.title : element.getAttribute(content).replace(" - ", " Forum - ");
+	content = (typeof content === 'undefined') ? 'content' : content;
+	var element = document.querySelector("metameta[property='" + name + "'], meta[name='" + name + "']");
+	return (element == null) ? document.title : element.getAttribute(content).replace(" - ", " Forum - ");
 }
+
+var siteName = getMetaContentByName("og:site_name");
 
 setTitle();
 
