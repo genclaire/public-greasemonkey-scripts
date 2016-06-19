@@ -18,6 +18,8 @@
 // look for a hash in the URL, parse it out, and assign it to the
 // document title -- otherwise, set it 
 function setTitle(siteName) {
+	// test for a windows hash. if there isn't one, set the title as
+	// the passed in SiteName; otherwise, parse the hash and assign it
 	return document.title = (!window.location.hash) ? siteName : hash.match(/.*?-([^%]+)(%|$)/g)[1].replace(/-/g, ' ').concat(' - ', siteName);
 }
 
@@ -36,7 +38,7 @@ function getMetaContentByName(name, content) {
 
 // pass the returned value of getMetaContentByName as the
 // siteName to set the title of the current window
-setTitle(getMetaContentByName("og:site_name"));
+setTitle(getMetaContentByName('og:site_name'));
 
 window.addEventListener("hashchange", setTitle, false);
 
