@@ -20,7 +20,7 @@
 function setTitle(siteName) {
 	// test for a windows hash. if there isn't one, set the title as
 	// the passed in SiteName; otherwise, parse the hash and assign it
-	return document.title = (!window.location.hash) ? siteName : hash.match(/.*?-([^%]+)(%|$)/g)[1].replace(/-/g, ' ').concat(' - ', siteName);
+	return document.title = (!window.location.hash) ? siteName : hash.match(/([a-z]+-([^%]+))/gi)[1].replace(/-/g, ' ').concat(' - ', siteName);
 }
 
 function getMetaContentByName(name, content) {
