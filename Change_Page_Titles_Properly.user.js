@@ -30,8 +30,8 @@ function getMetaContentByName(name, content) {
 		content = 'content';
 	}
 	// "metameta"? leaving this because I'm not certain what your goal is, here
-	var element = document.querySelector("metameta[property='" + name + "'], meta[name='" + name + "']");		  	var element = document.querySelector("metameta[
-	return (element == null) ? document.title : element.getAttribute(content).replace(" - ", " Forum - ");		  	return (element == null) ? document.title : 
+	var element = document.querySelector('metameta[property='" + name + "'], meta[name='" + name + "']');
+	return (element == null) ? document.title : element.getAttribute(content).replace(' - ', ' Forum - ');
 }
 
 //siteName = getMetaContentByName("og:site_name");
@@ -40,7 +40,7 @@ function getMetaContentByName(name, content) {
 // siteName to set the title of the current window
 setTitle(getMetaContentByName('og:site_name'));
 
-window.addEventListener("hashchange", setTitle, false);
+window.addEventListener('hashchange', setTitle, false);
 
 /*
 function init() {
