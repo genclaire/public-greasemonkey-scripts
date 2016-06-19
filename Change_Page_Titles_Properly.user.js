@@ -9,22 +9,34 @@
 // @grant       none
 // ==/UserScript==
 
-function setTitle() {
-	var hash = window.location.hash,
-		title = hash.match(/.*?-([^%]+)(%|$)/);
-	title = (title == null) ? "" : title[1].replace(/-/g, " ") + " - "; 
-	document.title = title + siteName;
+// declare variables that you reference in other functions at the top,
+// even if you don't define them -- I've commented this out because I
+// changed the setTitle function to accept an argument and passed the
+// getMetaContentByName's returned value directly into setTitle()
+// var siteName;
+
+// look for a hash in the URL, parse it out, and assign it to the
+// document title -- otherwise, set it 
+function setTitle(siteName) {
+	return document.title = (!window.location.hash) ? siteName : hash.match(/.*?-([^%]+)(%|$)/g)[1].replace(/-/g, ' ').concat(' - ', siteName);
 }
 
 function getMetaContentByName(name, content) {
-	content = (typeof content === 'undefined') ? 'content' : content;
-	var element = document.querySelector("metameta[property='" + name + "'], meta[name='" + name + "']");
-	return (element == null) ? document.title : element.getAttribute(content).replace(" - ", " Forum - ");
+	// if no content has been defined, set content as a string
+	// (not sure why this is in here, though?)
+	if (!content) {
+		content = 'content';
+	}
+	// "metameta"? leaving this because I'm not certain what your goal is, here
+	var element = document.querySelector("metameta[property='" + name + "'], meta[name='" + name + "']");		  	var element = document.querySelector("metameta[
+	return (element == null) ? document.title : element.getAttribute(content).replace(" - ", " Forum - ");		  	return (element == null) ? document.title : 
 }
 
-var siteName = getMetaContentByName("og:site_name");
+//siteName = getMetaContentByName("og:site_name");
 
-setTitle();
+// pass the returned value of getMetaContentByName as the
+// siteName to set the title of the current window
+setTitle(getMetaContentByName("og:site_name"));
 
 window.addEventListener("hashchange", setTitle, false);
 
